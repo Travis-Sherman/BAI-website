@@ -1,0 +1,86 @@
+
+/* Navigation styles */
+.nav-bar {
+    background: linear-gradient(135deg, #f5e6d3 0%, #d4af7a 100%);
+    padding: 1.2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 15px rgba(212, 175, 122, 0.2);
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list a {
+    color: #4a3c31;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-list a:hover {
+    color: #8b6b43;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-list a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #8b6b43;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-list a:hover::after {
+    width: 80%;
+}
+
+.active {
+    color: #8b6b43 !important;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Update general page styles to match theme */
+body {
+    background: #faf6f1;
+}
+
+.card {
+    border: 1px solid rgba(212, 175, 122, 0.2);
+    box-shadow: 0 4px 20px rgba(212, 175, 122, 0.1);
+}
+
+button {
+    background: #d4af7a !important;
+    transition: all 0.3s ease !important;
+}
+
+button:hover {
+    background: #8b6b43 !important;
+}
+
+/* Footer credit */
+body::after {
+    content: 'Powered by ZerePy';
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+    color: #8b6b43;
+    opacity: 0.8;
+}

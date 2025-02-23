@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with Agent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .chat-layout {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .agent-panel {
+            width: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        .agent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .agent-option {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .agent-option.selected {
+            background: #d4af7a;
+            color: white;
+            border-color: #8b6b43;
+        }
+        .agent-option:hover {
+            background: #f5e6d3;
+        }
+        .chat-section {
+            flex: 1;
+        }
+        .chat-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            height: 400px;
+            overflow-y: auto;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .user-message {
+            background: #e3f2fd;
+            margin-left: 20%;
+        }
+        .agent-message {
+            background: #f5f5f5;
+            margin-right: 20%;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #0066ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <link rel="stylesheet" href="/static/styles.css">
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li><a href="/">IamBAI</a></li>
+            <li><a href="/music">Music</a></li>
+            <li><a href="/phygital">Phygital</a></li>
+            <li><a href="/chat" class="active">Chat</a></li>
+            <li><a href="/conscience">Conscience</a></li>
+            <li><a href="https://store.example.com" target="_blank">Store</a></li>
+        </ul>
+    </nav>
+
+    <div class="chat-layout">
+        <div class="agent-panel">
+            <h3>Select Agent</h3>
+            <div class="agent-list" id="agentList"></div>
+        </div>
+        <div class="chat-section">
+            <div class="chat-container" id="chatContainer"></div>
+
+            <div class="input-container">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentAgent = '';
+        let userAccount;
+        const contractAddress = '0x2af6fbf2AF57BdF6DFfECBe3C5B8C37a32a4436F'; // Replace with your contract address
+        const abi = [
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "internalType": "string",
+                      "name": "messageId",
+                      "type": "string"
+                    },
+                    {
+                      "indexed": false,
+                      "internalType": "string",
+                      "name": "message",
+                      "type": "string"
+                    },
+                    {
+                      "indexed": true,
+                      "internalType": "address",
+                      "name": "sender",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "MessageRecorded",
+                  "type": "event"
+                },
+                {
+                  "inputs": [
+                    {
+                      "internalType": "uint256",
+                      "name": "index",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "getMessage",
+                  "outputs": [
+                    {
+                      "internalType": "string",
+                      "name": "",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "inputs": [
+                    {
+                      "internalType": "uint256",
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "messages",
+                  "outputs": [
+                    {
+                      "internalType": "string",
+                      "name": "messageId",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "message",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "sender",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "timestamp",
+                      "type": "uint256"
+                    }
+                  ],
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "inputs": [
+                    {
+                      "internalType": "string",
+                      "name": "messageId",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "message",
+                      "type": "string"
+                    }
+                  ],
+                  "name": "recordMessage",
+                  "outputs": [],
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                }
+              ];
+
+        // Load available agents
+        function loadAgents() {
+            fetch('/api/agent/list')
+                .then(response => response.json())
+                .then(agents => {
+                    const agentList = document.getElementById('agentList');
+                    agentList.innerHTML = agents.map(agent => 
+                        `<div class="agent-option" onclick="selectAgent('${agent}')">${agent}</div>`
+                    ).join('');
+                });
+        }
+
+        function selectAgent(agentName) {
+            document.querySelectorAll('.agent-option').forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.innerText === agentName) {
+                    opt.classList.add('selected');
+                }
+            });
+
+            fetch(`/api/agent/load/${agentName}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentAgent = agentName;
+                        loadChatHistory(agentName);
+                    }
+                });
+        }
+
+        function loadChatHistory(agentName) {
+            fetch(`/api/chat/history/${agentName}`)
+                .then(response => response.json())
+                .then(history => {
+                    const chatContainer = document.getElementById('chatContainer');
+                    chatContainer.innerHTML = '';
+                    history.forEach(msg => {
+                        appendMessage(msg.message, msg.isUser);
+                    });
+                });
+        }
+
+        loadAgents();
+
+        function appendMessage(text, isUser) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'agent-message'}`;
+            messageDiv.textContent = text;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    userAccount = accounts[0];
+                    console.log('Connected account:', userAccount);
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                }
+            } else {
+                alert('Please install MetaMask!');
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (!message || !currentAgent) return;
+
+            appendMessage(message, true);
+            input.value = '';
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message,
+                        agent: currentAgent
+                    })
+                });
+
+                const data = await response.json();
+                appendMessage(data.response, false);
+
+                if (!userAccount) {
+                    await connectWallet(); // Ask user to connect their wallet
+                }
+
+                const web3 = new Web3(window.ethereum);
+                const contract = new web3.eth.Contract(abi, contractAddress);
+                const messageId = `BAI_${Date.now()}`;
+
+                // Record BAI's message on the blockchain
+                const tx = await contract.methods.recordMessage(messageId, data.response).send({ from: userAccount });
+
+                // Notify user about the successful transaction
+                alert(`Transaction successful! Hash: ${tx.transactionHash}`);
+
+                // Send the transaction hash to the conscience page
+                await fetch(`/api/transactions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        transaction_id: tx.transactionHash,
+                        message: data.response,
+                        agent: currentAgent
+                    })
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+                appendMessage('Error: Could not get response from agent', false);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BAI - Phygital</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .phygital-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .phygital-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .outfit-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(212, 175, 122, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .outfit-card:hover {
+            transform: translateY(-5px);
+        }
+        .outfit-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .outfit-content {
+            padding: 20px;
+        }
+        .outfit-title {
+            font-size: 1.5em;
+            color: #4a3c31;
+            margin-bottom: 10px;
+        }
+        .outfit-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+        .mint-button {
+            width: 100%;
+            padding: 12px;
+            background: #d4af7a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        .mint-button:hover {
+            background: #8b6b43;
+        }
+    </style>
+</head>
+<body>
+    <link rel="stylesheet" href="/static/styles.css">
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li><a href="/">IamBAI</a></li>
+            <li><a href="/music">Music</a></li>
+            <li><a href="/phygital" class="active">Phygital</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/conscience">Conscience</a></li>
+            <li><a href="https://store.example.com" target="_blank">Store</a></li>
+        </ul>
+    </nav>
+
+    <div class="phygital-container">
+        <h1 style="color: #4a3c31; margin-bottom: 30px;">BAI Official: Phygital Collection</h1>
+        <div class="outfit-description">Step into the future of hip-hop and crypto culture with BAI Official: Unchained Sonic Collection—a groundbreaking NFT series that fuses music, phigital fashion, and Web3 innovation. BAI, the hyper-realistic AI artist repping Atlanta’s raw energy and female hip-hop culture, drops her debut NFT collection, delivering exclusive, blockchain-verified sonic experiences. Each NFT unlocks never-before-heard tracks, behind-the-scenes access, and phigital fashion drops, allowing holders to flex both in the metaverse and real life. With customizable avatar utilities, token-gated perks, and direct engagement with BAI’s AI-powered persona, this collection isn’t just art—it’s an immersive experience redefining digital ownership in the music industry. Join the BAI Official Sonic Collection, the first ever NFT collection to feature a hyper-realistic.</div>
+        <div class="phygital-grid">
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit1.webp" alt="Cyber Glam Jacket" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Urban Royalty</div>
+                    <div class="outfit-description">A bold black zip-up hoodie adorned with gold lettering and matching joggers, finished with chunky boots. Perfect for turning city streets into your personal runway.</div>
+                    <button onclick="window.open('https://vivid-n2m-bai.nfts2.me/, '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+            
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit2.webp" alt="Digital Denim" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Denim Luxe</div>
+                    <div class="outfit-description">A sleek black bralette paired with light-wash skinny jeans and an oversized denim jacket. Accented with layered gold necklaces for a casual-yet-glamorous vibe.</div>
+                    <button onclick="window.open('https://n2m-bai-z5pdas.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit3.webp" alt="Meta Mesh Top" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Night Out Noir</div>
+                    <div class="outfit-description">A sultry black mini dress with leather accents, worn under a slouchy off-the-shoulder jacket. A statement belt and strappy heels complete this party-ready ensemble.</div>
+                    <button onclick="window.open('https://neon-n2m-bai.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit4.webp" alt="Tech Trench" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Street Chic</div>
+                    <div class="outfit-description">A cropped black top teamed with high-waisted black jeans, layered gold jewelry, and a casual jacket draped off the shoulders.</div>
+                    <button onclick="window.open('https://stellar-n2m-bai.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit5.webp" alt="Pixel Dress" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Bold & Gilded</div>
+                    <div class="outfit-description">An oversized black hoodie emblazoned with metallic gold lettering, styled with dark denim and gold hoop earrings. An effortlessly cool, high-impact look.</div>
+                    <button onclick="window.open('https://sleek-n2m-bai.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit6.webp" alt="Blockchain Boots" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">White-Hot Elegance</div>
+                    <div class="outfit-description">A structured white blazer over a beaded bustier, matched with tailored white shorts. Gold accessories and strappy heels elevate this polished daytime-to-evening outfit.</div>
+                    <button onclick="window.open('https://awesome-n2m-bai.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit7.webp" alt="NFT Necklace" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Sporty Glam</div>
+                    <div class="outfit-description">A beige cropped jacket layered over a matching bralette, paired with black shorts. Chunky gold chains and hoop earrings give a striking contrast to the laid-back silhouette.</div>
+                    <button onclick="window.open('https://n2m-bai-r1gtad.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit8.webp" alt="Smart Shades" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Red Edge</div>
+                    <div class="outfit-description">A black bra top under a bold red bomber jacket, styled with black joggers and crisp white sneakers. This outfit fuses sporty comfort with a fierce, edgy twist.</div>
+                    <button onclick="window.open('https://cosmic-n2m-bai.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit9.webp" alt="Crypto Crop Top" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Sleek & Sultry</div>
+                    <div class="outfit-description">A floor-length black slip dress with a thigh-high slit, complemented by delicate silver jewelry and stiletto sandals. Ideal for a sophisticated evening affair.</div>
+                    <button onclick="window.open('https://happy-n2m-bai.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+
+            <div class="outfit-card">
+                <img src="/static/BAI-outfit10.webp" alt="Virtual Visor" class="outfit-image">
+                <div class="outfit-content">
+                    <div class="outfit-title">Luxe Street Swagger</div>
+                    <div class="outfit-description">A black bra top and high-waisted shorts under a bomber jacket, teamed with white sneakers. Statement gold accessories and a luxury car backdrop underscore the high-end street style.</div>
+                    <button onclick="window.open('https://n2m-bai-59ngfn.nfts2.me/', '_blank')" class="mint-button">Mint NFT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

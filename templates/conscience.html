@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BAI - Conscience</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js" type="application/javascript"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .conscience-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .conscience-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(212, 175, 122, 0.1);
+        }
+        .conscience-title {
+            font-size: 2.5em;
+            color: #4a3c31;
+            margin-bottom: 30px;
+        }
+        .transaction-table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+        }
+        .transaction-table th, .transaction-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .transaction-table th {
+            background: #f5e6d3;
+            color: #4a3c31;
+            font-weight: bold;
+        }
+        .blockchain-id {
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <link rel="stylesheet" href="/static/styles.css">
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li><a href="/">IamBAI</a></li>
+            <li><a href="/music">Music</a></li>
+            <li><a href="/phygital">Phygital</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/conscience" class="active">Conscience</a></li>
+            <li><a href="https://store.example.com" target="_blank">Store</a></li>
+        </ul>
+    </nav>
+
+    <div class="conscience-container">
+        <div class="conscience-content">
+            <h1 class="conscience-title">Transaction History</h1>
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>Date/Time</th>
+                        <th>Transaction Hash</th>
+                        <th>From</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionFeed">
+                    <tr>
+                        <td colspan="4" class="loading">Loading transactions...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const CONTRACT_ADDRESS = '0x2af6fbf2AF57BdF6DFfECBe3C5B8C37a32a4436F';
+        const abi = [
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "string",
+                  "name": "messageId",
+                  "type": "string"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "message",
+                  "type": "string"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                }
+              ],
+              "name": "MessageRecorded",
+              "type": "event"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "index",
+                  "type": "uint256"
+                }
+              ],
+              "name": "getMessage",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                },
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "name": "messages",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "messageId",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "message",
+                  "type": "string"
+                },
+                {
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "timestamp",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "messageId",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "message",
+                  "type": "string"
+                }
+              ],
+              "name": "recordMessage",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ];
+
+        async function connectToSonic() {
+            const provider = new ethers.providers.JsonRpcProvider('https://rpc.sonic.fantom.network');
+            return new ethers.Contract(CONTRACT_ADDRESS, abi, provider);
+        }
+
+        async function fetchTransactions() {
+            try {
+                const contract = await connectToSonic();
+                const filter = contract.filters.MessageRecorded();
+                const events = await contract.queryFilter(filter, -10000); // Last 10000 blocks
+
+                const feed = document.getElementById('transactionFeed');
+                feed.innerHTML = events
+                    .sort((a, b) => b.blockNumber - a.blockNumber)
+                    .map(event => {
+                        const date = new Date(event.args.timestamp * 1000).toLocaleString();
+                        return `
+                            <tr>
+                                <td>${date}</td>
+                                <td class="blockchain-id">${event.transactionHash}</td>
+                                <td class="blockchain-id">${event.args.sender}</td>
+                                <td>${event.args.message}</td>
+                            </tr>
+                        `;
+                    })
+                    .join('');
+
+                if (events.length === 0) {
+                    feed.innerHTML = '<tr><td colspan="4" class="loading">No transactions found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error fetching transactions:', error);
+                document.getElementById('transactionFeed').innerHTML = 
+                    '<tr><td colspan="4" class="loading">Error loading transactions. Please try again later.</td></tr>';
+            }
+        }
+
+        // Fetch transactions immediately and every 30 seconds
+        fetchTransactions();
+        setInterval(fetchTransactions, 30000);
+    </script>
+</body>
+</html>

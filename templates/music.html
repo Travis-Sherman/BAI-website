@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BAI - Music</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .music-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .track-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(212, 175, 122, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .track-card:hover {
+            transform: translateY(-5px);
+        }
+        .track-image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .track-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .track-image-container:hover .track-image {
+            transform: scale(1.05);
+        }
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .track-image-container:hover .play-overlay {
+            opacity: 1;
+        }
+        .play-button {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            color: #4a3c31;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+        .track-title {
+            font-size: 1.5em;
+            color: #4a3c31;
+            margin-bottom: 10px;
+        }
+        .track-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        #connectButton {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .mint-button {
+            width: 100%;
+            padding: 12px;
+            background: #d4af7a !important;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        .mint-button:hover {
+            background: #8b6b43 !important;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <link rel="stylesheet" href="/static/styles.css">
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li><a href="/">IamBAI</a></li>
+            <li><a href="/music" class="active">Music</a></li>
+            <li><a href="/phygital">Phygital</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/conscience">Conscience</a></li>
+            <li><a href="https://store.example.com" target="_blank">Store</a></li>
+        </ul>
+    </nav>
+
+    <div class="music-container">
+        <h1 style="color: #4a3c31; margin-bottom: 30px;">Latest Tracks</h1>
+        <div class="music-grid">
+            <div class="track-card">
+                <div class="track-image-container">
+                    <img src="/static/FineShit-cover.webp" alt="Track 1" class="track-image">
+                    <div class="play-overlay">
+                        <audio id="audio1" src="/static/Fine Shit.mp3" preload="metadata"></audio>
+                        <button onclick="togglePlay('audio1', this)" class="play-button">▶</button>
+                    </div>
+                </div>
+                <div class="track-title">Fine Shit</div>
+                <div class="track-description">Fine Shit by BAI is a bold, futuristic anthem for the women running the tech game and living in luxury while doing it. With sleek, AI-infused production and hypnotic basslines, the track drips with confidence, blending cyber-glam aesthetics with boss energy.</div>
+                <button onclick="mintTrack('https://fine-shit.nfts2.me/')" class="mint-button">Mint on Sonic</button>
+            </div>
+            <div class="track-card">
+                <div class="track-image-container">
+                    <img src="/static/Digital-Diamonds-cover.webp" alt="Track 2" class="track-image">
+                    <div class="play-overlay">
+                        <audio id="audio2" src="/static/Digital Diamonds.mp3" preload="metadata"></audio>
+                        <button onclick="togglePlay('audio2', this)" class="play-button">▶</button>
+                    </div>
+                </div>
+                <div class="track-title">Digital Diamonds</div>
+                <div class="track-description">Digital Diamonds is a high-energy, futuristic banger where BAI flexes her mastery over both luxury and liquidity. The beat pulses like a blockchain transaction—fast, precise, and unstoppable—while her silky yet commanding flow glides effortlessly over AI-infused synths and cybernetic basslines.
+
+</div>
+                <button onclick="mintTrack('https://digital-diamonds.nfts2.me/')" class="mint-button">Mint on Sonic</button>
+            </div>
+            <div class="track-card">
+                <div class="track-image-container">
+                    <img src="/static/Future-Gold-cover.webp" alt="Track 3" class="track-image">
+                    <div class="play-overlay">
+                        <audio id="audio3" src="/static/Future Gold.mp3" preload="metadata"></audio>
+                        <button onclick="togglePlay('audio3', this)" class="play-button">▶</button>
+                    </div>
+                </div>
+                <div class="track-title">Future Gold</div>
+                <div class="track-description">Future Gold is an ethereal, bass-heavy masterpiece where BAI takes listeners on a first-class ride through her lavish vision of tomorrow. The track shimmers with cybernetic melodies and deep, hypnotic 808s, crafting a sonic dreamscape where wealth is limitless, power is digital, and the future is already hers.
+
+</div>
+                <button onclick="mintTrack('https://future-gold.nfts2.me/')" class="mint-button">Mint on Sonic</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePlay(audioId, button) {
+            const audio = document.getElementById(audioId);
+            if (audio.paused) {
+                // Stop all other playing audio
+                document.querySelectorAll('audio').forEach(a => {
+                    if (a.id !== audioId && !a.paused) {
+                        a.pause();
+                        a.previousElementSibling.textContent = '▶';
+                    }
+                });
+                audio.play();
+                button.textContent = '⏸';
+            } else {
+                audio.pause();
+                button.textContent = '▶';
+            }
+        }
+
+        const contractAddress = '0xA3AD1B92D2c25aaBECc5024A2F558E15392Aad53'; // replace with your deployed contract address
+        
+
+     let userAccount;
+        const sonicTestnetChainId = '0xdede'; // Sonic Testnet Chain ID in hexadecimal
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    userAccount = accounts[0];
+                    document.getElementById('connectButton').innerText = 'Wallet Connected: ' + userAccount;
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                    alert('Error connecting to wallet: ' + error.message);
+                }
+            } else {
+                alert('Please install MetaMask!');
+            }
+        }
+        function mintTrack(songId) {
+            window.open(songId, '_blank');
+        }
+    </script>
+</body>
+</html>

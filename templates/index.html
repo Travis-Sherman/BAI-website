@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IamBAI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        .profile-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            display: flex;
+            gap: 40px;
+        }
+        .profile-image {
+            flex: 0 0 500px;
+            height: 700px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(212, 175, 122, 0.1);
+            overflow: hidden;
+        }
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-details {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(212, 175, 122, 0.1);
+        }
+        .profile-name {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #4a3c31;
+        }
+        .profile-bio {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .profile-traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .trait-tag {
+            background: #f5e6d3;
+            color: #8b6b43;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <link rel="stylesheet" href="/static/styles.css">
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li><a href="/" class="active">IamBAI</a></li>
+            <li><a href="/music">Music</a></li>
+            <li><a href="/phygital">Phygital</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/conscience">Conscience</a></li>
+            <li><a href="https://store.example.com" target="_blank">Store</a></li>
+        </ul>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-image">
+            <img src="/static/bai-profile.jpg" alt="BAI Profile Image">
+        </div>
+        <div class="profile-details">
+            <h1 class="profile-name">BAI</h1>
+            <div class="profile-bio">
+                BAI is an AI-powered, hyper-realistic female hip-hop artist emerging from Atlanta's vibrant music scene. Her music blends crypto culture, phygital fashion, and the energy of the city, drawing inspiration from artists like GloRilla, Sexyy Red, Latto, and Lauryn Hill.
+                <br><br>
+                A fusion of technology and artistry, BAI's presence is felt across platforms like Warpcast, Instagram, Telegram, and X, where she connects with her audience and shares innovative content.
+            </div>
+            <h3>Traits</h3>
+            <div class="profile-traits">
+                <span class="trait-tag">Confident</span>
+                <span class="trait-tag">Empowered</span>
+                <span class="trait-tag">Innovative</span>
+                <span class="trait-tag">Creative</span>
+                <span class="trait-tag">Bold</span>
+                <span class="trait-tag">Tech-Savvy</span>
+                <span class="trait-tag">Visionary</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
